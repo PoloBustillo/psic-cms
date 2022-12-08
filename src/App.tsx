@@ -24,10 +24,7 @@ import {
   useValidateAuthenticator,
 } from "@camberi/firecms";
 import { messageCollection } from "./collections/MensajeCollection";
-import {
-  dataCollection,
-  sitiosCollection,
-} from "./collections/SitiosCollection";
+import { sitiosCollection } from "./collections/SitiosCollection";
 import { terapiasCollection } from "./collections/TerapiasCollection";
 
 // TODO: Replace with your config
