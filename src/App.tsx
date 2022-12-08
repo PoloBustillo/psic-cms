@@ -1,16 +1,34 @@
-import React, { useCallback } from "react";
-
-import { User as FirebaseUser } from "firebase/auth";
-import {
-  Authenticator,
-  buildCollection,
-  buildProperty,
-  EntityReference,
-  FirebaseCMSApp,
-} from "@camberi/firecms";
+import { GoogleAuthProvider } from "firebase/auth";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import "typeface-rubik";
 import "@fontsource/ibm-plex-mono";
+
+import {
+  buildCollection,
+  CircularProgressCenter,
+  createCMSDefaultTheme,
+  FirebaseAuthController,
+  FirebaseLoginView,
+  FireCMS,
+  NavigationRoutes,
+  Scaffold,
+  SideDialogs,
+  SnackbarProvider,
+  useBuildModeController,
+  useFirebaseAuthController,
+  useFirebaseStorageSource,
+  useFirestoreDataSource,
+  useInitialiseFirebase,
+  useValidateAuthenticator,
+} from "@camberi/firecms";
+import { messageCollection } from "./collections/MensajeCollection";
+import {
+  dataCollection,
+  sitiosCollection,
+} from "./collections/SitiosCollection";
+import { terapiasCollection } from "./collections/TerapiasCollection";
 
 // TODO: Replace with your config
 const firebaseConfig = {
@@ -22,68 +40,16 @@ const firebaseConfig = {
   appId: "1:270454145850:web:40303bb3b6bd804390c603",
 };
 
-const locales = {
-  "en-US": "English (United States)",
-  "es-ES": "Spanish (Spain)",
-  "de-DE": "German",
-};
+const DEFAULT_SIGN_IN_OPTIONS = [GoogleAuthProvider.PROVIDER_ID];
 
-type Product = {
-  name: string;
-  price: number;
-  status: string;
-  published: boolean;
-  related_products: EntityReference[];
-  main_image: string;
-  tags: string[];
-  description: string;
-  categories: string[];
-  publisher: {
-    name: string;
-    external_id: string;
-  };
-  expires_on: Date;
-};
-
-const localeCollection = buildCollection({
-  path: "locale",
-  customId: locales,
-  name: "Locales",
-  singularName: "Locales",
-  properties: {
-    name: {
-      name: "Title",
-      validation: { required: true },
-      dataType: "string",
-    },
-    selectable: {
-      name: "Selectable",
-      description: "Is this locale selectable",
-      dataType: "boolean",
-    },
-    video: {
-      name: "Video",
-      dataType: "string",
-      validation: { required: false },
-      storage: {
-        storagePath: "videos",
-        acceptedFiles: ["video/*"],
-      },
-    },
-  },
-});
-
-const productsCollection = buildCollection<Product>({
-  name: "Products",
-  singularName: "Product",
+const productsCollection = buildCollection({
   path: "products",
-  permissions: ({ authController }) => ({
+  permissions: ({ user }) => ({
     edit: true,
     create: true,
-    // we have created the roles object in the navigation builder
-    delete: false,
+    delete: true,
   }),
-  subcollections: [localeCollection],
+  name: "Products",
   properties: {
     name: {
       name: "Name",
@@ -113,116 +79,135 @@ const productsCollection = buildCollection<Product>({
         public: "Public",
       },
     },
-    published: ({ values }) =>
-      buildProperty({
-        name: "Published",
-        dataType: "boolean",
-        columnWidth: 100,
-        disabled:
-          values.status === "public"
-            ? false
-            : {
-              clearOnDisabled: true,
-              disabledMessage:
-                "Status must be public in order to enable this the published flag",
-            },
-      }),
-    related_products: {
-      dataType: "array",
-      name: "Related products",
-      description: "Reference to self",
-      of: {
-        dataType: "reference",
-        path: "products",
-      },
-    },
-    main_image: buildProperty({
-      // The `buildProperty` method is a utility function used for type checking
-      name: "Image",
-      dataType: "string",
-      storage: {
-        storagePath: "images",
-        acceptedFiles: ["image/*"],
-      },
-    }),
-    tags: {
-      name: "Tags",
-      description: "Example of generic array",
-      validation: { required: true },
-      dataType: "array",
-      of: {
-        dataType: "string",
-      },
-    },
-    description: {
-      name: "Description",
-      description: "Not mandatory but it'd be awesome if you filled this up",
-      longDescription:
-        "Example of a long description hidden under a tooltip. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin quis bibendum turpis. Sed scelerisque ligula nec nisi pellentesque, eget viverra lorem facilisis. Praesent a lectus ac ipsum tincidunt posuere vitae non risus. In eu feugiat massa. Sed eu est non velit facilisis facilisis vitae eget ante. Nunc ut malesuada erat. Nullam sagittis bibendum porta. Maecenas vitae interdum sapien, ut aliquet risus. Donec aliquet, turpis finibus aliquet bibendum, tellus dui porttitor quam, quis pellentesque tellus libero non urna. Vestibulum maximus pharetra congue. Suspendisse aliquam congue quam, sed bibendum turpis. Aliquam eu enim ligula. Nam vel magna ut urna cursus sagittis. Suspendisse a nisi ac justo ornare tempor vel eu eros.",
-      dataType: "string",
-      columnWidth: 300,
-    },
-    categories: {
-      name: "Categories",
-      validation: { required: true },
-      dataType: "array",
-      of: {
-        dataType: "string",
-        enumValues: {
-          electronics: "Electronics",
-          books: "Books",
-          furniture: "Furniture",
-          clothing: "Clothing",
-          food: "Food",
-        },
-      },
-    },
-    publisher: {
-      name: "Publisher",
-      description: "This is an example of a map property",
-      dataType: "map",
-      properties: {
-        name: {
-          name: "Name",
-          dataType: "string",
-        },
-        external_id: {
-          name: "External id",
-          dataType: "string",
-        },
-      },
-    },
-    expires_on: {
-      name: "Expires on",
-      dataType: "date",
-    },
   },
 });
 
+/**
+ * This is an example of how to use the components provided by FireCMS for
+ * a better customisation.
+ * @constructor
+ */
 export default function App() {
-  const myAuthenticator: Authenticator<FirebaseUser> = useCallback(
-    async ({ user, authController }) => {
-      if (user?.email?.includes("flanders")) {
-        throw Error("Stupid Flanders!");
-      }
-      console.log("Allowing access to", user);
-      // This is an example of retrieving async data related to the user
-      // and storing it in the user extra field.
-      const sampleUserRoles = await Promise.resolve(["admin"]);
-      authController.setExtra(sampleUserRoles);
+  const signInOptions = DEFAULT_SIGN_IN_OPTIONS;
 
-      return true;
-    },
-    []
-  );
+  const {
+    firebaseApp,
+    firebaseConfigLoading,
+    configError,
+    firebaseConfigError,
+  } = useInitialiseFirebase({ firebaseConfig });
+
+  const authController: FirebaseAuthController = useFirebaseAuthController({
+    firebaseApp,
+    signInOptions,
+  });
+
+  const dataSource = useFirestoreDataSource({
+    firebaseApp,
+    // You can add your `FirestoreTextSearchController` here
+  });
+
+  const storageSource = useFirebaseStorageSource({ firebaseApp });
+
+  const modeController = useBuildModeController();
+
+  const theme = createCMSDefaultTheme({ mode: modeController.mode });
+
+  const { authLoading, canAccessMainView, notAllowedError } =
+    useValidateAuthenticator({
+      authController,
+      authentication: async ({ user }) => {
+        if (
+          !user?.email?.includes("leopoldobeguiluz1@gmail.com") &&
+          !user?.email?.includes("psic.danieladiazmer@gmail.com")
+        ) {
+          return false;
+        }
+
+        console.log("Allowing access to", user?.email);
+        // This is an example of retrieving async data related to the user
+        // and storing it in the user extra field.
+        const sampleUserRoles = await Promise.resolve(["admin"]);
+        authController.setExtra(sampleUserRoles);
+        return true;
+      },
+      dataSource,
+      storageSource,
+    });
+
+  if (configError) {
+    return <div> {configError} </div>;
+  }
+
+  if (firebaseConfigError) {
+    return (
+      <div>
+        It seems like the provided Firebase config is not correct. If you are
+        using the credentials provided automatically by Firebase Hosting, make
+        sure you link your Firebase app to Firebase Hosting.
+      </div>
+    );
+  }
+
+  if (firebaseConfigLoading || !firebaseApp || authLoading) {
+    return <CircularProgressCenter />;
+  }
 
   return (
-    <FirebaseCMSApp
-      name={"Psicologa"}
-      logo={"/logo500.webp"}
-      authentication={myAuthenticator}
-      collections={[productsCollection]}
-      firebaseConfig={firebaseConfig}
-    />
+    <Router>
+      <SnackbarProvider>
+        <FireCMS
+          authController={authController}
+          collections={[
+            messageCollection,
+            sitiosCollection,
+            terapiasCollection,
+          ]}
+          modeController={modeController}
+          dataSource={dataSource}
+          storageSource={storageSource}
+          entityLinkBuilder={({ entity }) =>
+            `https://console.firebase.google.com/project/${firebaseApp.options.projectId}/firestore/data/${entity.path}/${entity.id}`
+          }
+        >
+          {({ context, loading }) => {
+            let component;
+            if (loading || authLoading) {
+              component = <CircularProgressCenter />;
+            } else if (!canAccessMainView) {
+              component = (
+                <FirebaseLoginView
+                  notAllowedError={
+                    notAllowedError ? "No tiene permisos para entrar" : ""
+                  }
+                  additionalComponent={
+                    <>Dashboard usado por la Psicologa Daniela Diaz</>
+                  }
+                  logo={"/logo500.webp"}
+                  allowSkipLogin={false}
+                  signInOptions={signInOptions}
+                  firebaseApp={firebaseApp}
+                  authController={authController}
+                />
+              );
+            } else {
+              component = (
+                <Scaffold name={"Psicologa"} logo={"/logo500.webp"}>
+                  <NavigationRoutes />
+                  <SideDialogs />
+                </Scaffold>
+              );
+            }
+
+            return (
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                {component}
+              </ThemeProvider>
+            );
+          }}
+        </FireCMS>
+      </SnackbarProvider>
+    </Router>
   );
 }
