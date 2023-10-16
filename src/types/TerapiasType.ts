@@ -1,6 +1,6 @@
 export type TerapiasType = {
   name: string;
-  type: [];
+  type: string;
   costos: [];
   description: string;
   longDescription: string;

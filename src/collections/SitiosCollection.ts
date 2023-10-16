@@ -2,7 +2,7 @@ import { buildCollection } from "@camberi/firecms";
 import { SitiosType } from "../types/SitiosType";
 
 export const sitiosCollection = buildCollection<SitiosType>({
-  group: "Configuraciones",
+  group: "Datos de la página",
   name: "Sitios",
   defaultSize: "m",
   singularName: "Sitios",
@@ -11,6 +11,12 @@ export const sitiosCollection = buildCollection<SitiosType>({
   icon: "Newspaper",
   inlineEditing: true,
   properties: {
+    name: {
+      name: "Nombre",
+      dataType: "string",
+      validation: { required: true },
+      editable: true,
+    },
     website: {
       url: true,
       name: "Webpage",
@@ -46,12 +52,7 @@ export const sitiosCollection = buildCollection<SitiosType>({
         },
       },
     },
-    name: {
-      name: "Nombre",
-      dataType: "string",
-      validation: { required: true },
-      editable: true,
-    },
+
     googleMapUrl: {
       url: true,
       name: "GMap URL",
@@ -69,6 +70,12 @@ export const sitiosCollection = buildCollection<SitiosType>({
       validation: { required: false },
       editable: true,
     },
+    telefono: {
+      dataType: "string",
+      name: "Telefono",
+      validation: { required: false },
+      editable: true,
+    },
     email: {
       email: true,
       name: "Email",
@@ -78,10 +85,31 @@ export const sitiosCollection = buildCollection<SitiosType>({
     },
     address: {
       name: "Dirección",
-      dataType: "string",
-      validation: { required: true },
-      editable: true,
-      multiline: true,
+      dataType: "array",
+      validation: { required: true, uniqueInArray: true },
+      of: {
+        dataType: "map",
+        properties: {
+          type: {
+            dataType: "string",
+            validation: { required: true, uniqueInArray: true },
+            enumValues: {
+              calle: "Calle",
+              zona: "Zona",
+              colonia: "Colonia",
+              cp: "CP",
+              entidad: "Ciudad/Estado",
+            },
+            name: "Tipo",
+          },
+          values: {
+            name: "Valor",
+            editable: true,
+            validation: { required: true },
+            dataType: "string",
+          },
+        },
+      },
     },
   },
   permissions: ({ authController }) => {

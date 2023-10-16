@@ -26,6 +26,8 @@ import {
 import { messageCollection } from "./collections/MensajeCollection";
 import { sitiosCollection } from "./collections/SitiosCollection";
 import { terapiasCollection } from "./collections/TerapiasCollection";
+import { bannerCollection } from "./collections/BannerCollection";
+import { preguntasCollection } from "./collections/PreguntasCollection";
 
 // TODO: Replace with your config
 const firebaseConfig = {
@@ -159,6 +161,8 @@ export default function App() {
             messageCollection,
             sitiosCollection,
             terapiasCollection,
+            bannerCollection,
+            preguntasCollection,
           ]}
           modeController={modeController}
           dataSource={dataSource}

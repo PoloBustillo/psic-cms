@@ -7,9 +7,9 @@ export const messageCollection = buildCollection<MensajeType>({
   defaultSize: "m",
   singularName: "Mensaje",
   customId: [
-    { id: "mensaje-inicial", label: "Mensaje Inicial" },
+    { id: "mensaje", label: "Mensaje Inicial" },
     { id: "lema", label: "Lema Inicial" },
-    { id: "frase-inicial", label: "Frase Inicial" },
+    { id: "frase", label: "Frase Inicial" },
   ],
   path: "mensaje",
   icon: "InsertComment",
@@ -23,6 +23,13 @@ export const messageCollection = buildCollection<MensajeType>({
       editable: true,
       multiline: true,
       markdown: true,
+    },
+    enable: {
+      name: "Habilitado",
+      defaultValue: true,
+      validation: { required: true },
+      dataType: "boolean",
+      editable: true,
     },
   },
   permissions: ({ authController }) => {

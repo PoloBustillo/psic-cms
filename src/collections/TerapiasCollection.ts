@@ -18,17 +18,12 @@ export const terapiasCollection = buildCollection<TerapiasType>({
     },
     type: {
       name: "Tipo de terapia",
-      dataType: "array",
-      validation: { uniqueInArray: true, max: 1 },
-      of: {
-        dataType: "string",
-        name: "Tipos",
-        enumValues: {
-          educativa: "Educativa",
-          social: "Social",
-          clinica: "Clinica",
-          organizacional: "Organizacional",
-        },
+      dataType: "string",
+      enumValues: {
+        Educativa: "Educativa",
+        Social: "Social",
+        Clinica: "Clinica",
+        Organizacional: "Organizacional",
       },
     },
     costos: {
