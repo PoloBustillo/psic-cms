@@ -1,5 +1,5 @@
 import { MensajeType } from "../types/MensajeType";
-import { buildCollection } from "@camberi/firecms";
+import { buildCollection } from "firecms";
 
 export const messageCollection = buildCollection<MensajeType>({
   group: "Configuraciones",
@@ -20,7 +20,6 @@ export const messageCollection = buildCollection<MensajeType>({
       name: "Mensaje",
       validation: { required: true },
       dataType: "string",
-      editable: true,
       multiline: true,
       markdown: true,
     },
@@ -29,7 +28,6 @@ export const messageCollection = buildCollection<MensajeType>({
       defaultValue: true,
       validation: { required: true },
       dataType: "boolean",
-      editable: true,
     },
   },
   permissions: ({ authController }) => {

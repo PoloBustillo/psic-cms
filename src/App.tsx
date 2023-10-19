@@ -22,7 +22,7 @@ import {
   useFirestoreDataSource,
   useInitialiseFirebase,
   useValidateAuthenticator,
-} from "@camberi/firecms";
+} from "firecms";
 import { messageCollection } from "./collections/MensajeCollection";
 import { sitiosCollection } from "./collections/SitiosCollection";
 import { terapiasCollection } from "./collections/TerapiasCollection";

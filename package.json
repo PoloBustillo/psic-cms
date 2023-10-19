@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@camberi/firecms": "^2.0.0-alpha.47",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5",
@@ -17,6 +16,7 @@
     "@mui/material": "^5",
     "@mui/x-date-pickers": "^5.0.0-beta.1",
     "firebase": "^9",
+    "firecms": "^2.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6",

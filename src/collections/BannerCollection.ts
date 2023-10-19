@@ -1,4 +1,4 @@
-import { buildCollection } from "@camberi/firecms";
+import { buildCollection } from "firecms";
 import { BannerType } from "../types/BannerType";
 
 export const bannerCollection = buildCollection<BannerType>({
