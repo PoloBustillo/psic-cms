@@ -12,6 +12,7 @@ import {
   FirebaseAuthController,
   FirebaseLoginView,
   FireCMS,
+  ModeControllerProvider,
   NavigationRoutes,
   Scaffold,
   SideDialogs,
@@ -154,61 +155,62 @@ export default function App() {
 
   return (
     <Router>
-      <SnackbarProvider>
-        <FireCMS
-          authController={authController}
-          collections={[
-            messageCollection,
-            sitiosCollection,
-            terapiasCollection,
-            bannerCollection,
-            preguntasCollection,
-          ]}
-          modeController={modeController}
-          dataSource={dataSource}
-          storageSource={storageSource}
-          entityLinkBuilder={({ entity }) =>
-            `https://console.firebase.google.com/project/${firebaseApp.options.projectId}/firestore/data/${entity.path}/${entity.id}`
-          }
-        >
-          {({ context, loading }) => {
-            let component;
-            if (loading || authLoading) {
-              component = <CircularProgressCenter />;
-            } else if (!canAccessMainView) {
-              component = (
-                <FirebaseLoginView
-                  notAllowedError={
-                    notAllowedError ? "No tiene permisos para entrar" : ""
-                  }
-                  additionalComponent={
-                    <>Dashboard usado por la Psicologa Daniela Diaz</>
-                  }
-                  logo={"/logo500.webp"}
-                  allowSkipLogin={false}
-                  signInOptions={signInOptions}
-                  firebaseApp={firebaseApp}
-                  authController={authController}
-                />
-              );
-            } else {
-              component = (
-                <Scaffold name={"Psicologa"} logo={"/logo500.webp"}>
-                  <NavigationRoutes />
-                  <SideDialogs />
-                </Scaffold>
-              );
+      <ModeControllerProvider value={modeController}>
+        <SnackbarProvider>
+          <FireCMS
+            authController={authController}
+            collections={[
+              messageCollection,
+              sitiosCollection,
+              terapiasCollection,
+              bannerCollection,
+              preguntasCollection,
+            ]}
+            dataSource={dataSource}
+            storageSource={storageSource}
+            entityLinkBuilder={({ entity }) =>
+              `https://console.firebase.google.com/project/${firebaseApp.options.projectId}/firestore/data/${entity.path}/${entity.id}`
             }
+          >
+            {({ context, loading }) => {
+              let component;
+              if (loading || authLoading) {
+                component = <CircularProgressCenter />;
+              } else if (!canAccessMainView) {
+                component = (
+                  <FirebaseLoginView
+                    notAllowedError={
+                      notAllowedError ? "No tiene permisos para entrar" : ""
+                    }
+                    additionalComponent={
+                      <>Dashboard usado por la Psicologa Daniela Diaz</>
+                    }
+                    logo={"/logo500.webp"}
+                    allowSkipLogin={false}
+                    signInOptions={signInOptions}
+                    firebaseApp={firebaseApp}
+                    authController={authController}
+                  />
+                );
+              } else {
+                component = (
+                  <Scaffold name={"Psicologa"} logo={"/logo500.webp"}>
+                    <NavigationRoutes />
+                    <SideDialogs />
+                  </Scaffold>
+                );
+              }
 
-            return (
-              <ThemeProvider theme={theme}>
-                <CssBaseline />
-                {component}
-              </ThemeProvider>
-            );
-          }}
-        </FireCMS>
-      </SnackbarProvider>
+              return (
+                <ThemeProvider theme={theme}>
+                  <CssBaseline />
+                  {component}
+                </ThemeProvider>
+              );
+            }}
+          </FireCMS>
+        </SnackbarProvider>
+      </ModeControllerProvider>
     </Router>
   );
 }

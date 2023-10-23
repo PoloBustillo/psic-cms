@@ -15,7 +15,6 @@ export const bannerCollection = buildCollection<BannerType>({
       name: "Imagenes",
       validation: { required: true },
       dataType: "array",
-      editable: true,
       of: {
         dataType: "string",
         storage: {

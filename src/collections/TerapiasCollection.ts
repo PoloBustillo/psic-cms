@@ -14,7 +14,6 @@ export const terapiasCollection = buildCollection<TerapiasType>({
       name: "Nombre",
       validation: { required: true },
       dataType: "string",
-      editable: true,
     },
     type: {
       name: "Tipo de terapia",
@@ -36,7 +35,6 @@ export const terapiasCollection = buildCollection<TerapiasType>({
         properties: {
           values: {
             name: "Precio",
-            editable: true,
             validation: { required: true },
             dataType: "number",
           },

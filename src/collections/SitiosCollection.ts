@@ -15,14 +15,12 @@ export const sitiosCollection = buildCollection<SitiosType>({
       name: "Nombre",
       dataType: "string",
       validation: { required: true },
-      editable: true,
     },
     website: {
       url: true,
       name: "Webpage",
       dataType: "string",
       validation: { required: false },
-      editable: true,
     },
     socialNetwork: {
       name: "Redes",
@@ -33,7 +31,6 @@ export const sitiosCollection = buildCollection<SitiosType>({
         properties: {
           values: {
             name: "URL",
-            editable: true,
             validation: { required: true },
             dataType: "string",
           },
@@ -58,7 +55,6 @@ export const sitiosCollection = buildCollection<SitiosType>({
       name: "GMap URL",
       dataType: "string",
       validation: { required: false },
-      editable: true,
     },
 
     tags: {
@@ -68,20 +64,17 @@ export const sitiosCollection = buildCollection<SitiosType>({
         dataType: "string",
       },
       validation: { required: false },
-      editable: true,
     },
     telefono: {
       dataType: "string",
       name: "Telefono",
       validation: { required: false },
-      editable: true,
     },
     email: {
       email: true,
       name: "Email",
       validation: { required: true },
       dataType: "string",
-      editable: true,
     },
     address: {
       name: "Dirección",
@@ -104,7 +97,6 @@ export const sitiosCollection = buildCollection<SitiosType>({
           },
           values: {
             name: "Valor",
-            editable: true,
             validation: { required: true },
             dataType: "string",
           },
