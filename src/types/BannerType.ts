@@ -1,3 +1,5 @@
 export type BannerType = {
-  images: [];
+  image: string;
+  description: string;
+  url: string;
 };

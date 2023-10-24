@@ -10,21 +10,27 @@ export const bannerCollection = buildCollection<BannerType>({
   icon: "PermMedia",
   inlineEditing: true,
   properties: {
-    images: {
-      columnWidth: 600,
-      name: "Imagenes",
+    image: {
+      name: "Imagen",
       validation: { required: true },
-      dataType: "array",
-      of: {
-        dataType: "string",
-        storage: {
-          storagePath: "imagenesBanner",
-          acceptedFiles: ["image/*"],
-          metadata: {
-            cacheControl: "max-age=1000000",
-          },
+      dataType: "string",
+      storage: {
+        storagePath: "imagenesBanner",
+        acceptedFiles: ["image/*"],
+        metadata: {
+          cacheControl: "max-age=1000000",
         },
       },
+    },
+    description: {
+      dataType: "string",
+      name: "Description",
+      validation: { required: true },
+    },
+    url: {
+      dataType: "string",
+      name: "Url",
+      validation: { required: true },
     },
   },
   permissions: ({ authController }) => {
