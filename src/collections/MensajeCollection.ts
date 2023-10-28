@@ -20,7 +20,6 @@ export const messageCollection = buildCollection<MensajeType>({
       name: "Mensaje",
       validation: { required: true },
       dataType: "string",
-      multiline: true,
       markdown: true,
     },
     enable: {
