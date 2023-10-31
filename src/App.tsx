@@ -127,7 +127,6 @@ export default function App() {
               informacionPersonal,
               bannerCollection,
               preguntasCollection,
-              informacionPersonal,
             ]}
             dataSource={dataSource}
             storageSource={storageSource}
