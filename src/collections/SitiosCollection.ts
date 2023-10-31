@@ -16,6 +16,7 @@ export const sitiosCollection = buildCollection<SitiosType>({
       dataType: "string",
       validation: { required: true },
     },
+    slogan: { name: "Slogan", dataType: "string" },
     website: {
       url: true,
       name: "Webpage",
@@ -49,7 +50,6 @@ export const sitiosCollection = buildCollection<SitiosType>({
         },
       },
     },
-
     googleMapUrl: {
       url: true,
       name: "GMap URL",
