@@ -103,6 +103,18 @@ export const sitiosCollection = buildCollection<SitiosType>({
         },
       },
     },
+    extraData: {
+      dataType: "array",
+      name: "Datos Extras",
+      of: {
+        dataType: "map",
+        properties: {
+          name: { dataType: "string", name: "Tipo" },
+          value: { dataType: "string", name: "Valor" },
+          icon: { dataType: "string", name: "Icon" },
+        },
+      },
+    },
   },
   permissions: ({ authController }) => {
     return {

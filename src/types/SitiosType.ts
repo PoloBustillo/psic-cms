@@ -9,5 +9,6 @@ export type SitiosType = {
   googleMapUrl: string;
   website: string;
   tags: [string];
+  extraData: [MapProperty];
   socialNetwork: [];
 };
