@@ -23,6 +23,7 @@ export const preguntasCollection = buildCollection<PreguntasType>({
     },
     orden: {
       dataType: "number",
+      validation: { unique: true },
       name: "Orden",
       defaultValue: 0,
     },
