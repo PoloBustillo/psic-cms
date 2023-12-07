@@ -30,6 +30,7 @@ import { terapiasCollection } from "./collections/TerapiasCollection";
 import { bannerCollection } from "./collections/BannerCollection";
 import { preguntasCollection } from "./collections/PreguntasCollection";
 import { informacionPersonal } from "./collections/InformacionPersonal";
+import { carouselCollection } from "./collections/CarouselCollection";
 
 // TODO: Replace with your config
 const firebaseConfig = {
@@ -126,6 +127,7 @@ export default function App() {
               terapiasCollection,
               informacionPersonal,
               bannerCollection,
+              carouselCollection,
               preguntasCollection,
             ]}
             dataSource={dataSource}
