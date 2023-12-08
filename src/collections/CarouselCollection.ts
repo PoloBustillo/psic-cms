@@ -6,7 +6,7 @@ export const carouselCollection = buildCollection<CarouselType>({
   name: "Carousel",
   defaultSize: "m",
   singularName: "Carousel",
-  path: "corousel",
+  path: "carousel",
   icon: "PermMedia",
   inlineEditing: true,
   properties: {
