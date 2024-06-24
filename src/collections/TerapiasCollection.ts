@@ -15,6 +15,12 @@ export const terapiasCollection = buildCollection<TerapiasType>({
       validation: { required: true },
       dataType: "string",
     },
+    duration: {
+      dataType: "number",
+      validation: { required: true },
+      name: "Duración (min.)",
+      defaultValue: 50,
+    },
     type: {
       name: "Tipo de terapia",
       dataType: "string",

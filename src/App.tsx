@@ -31,6 +31,7 @@ import { bannerCollection } from "./collections/BannerCollection";
 import { preguntasCollection } from "./collections/PreguntasCollection";
 import { informacionPersonal } from "./collections/InformacionPersonal";
 import { carouselCollection } from "./collections/CarouselCollection";
+import { paginaConfigCollection } from "./collections/PageConfigCollection";
 
 // TODO: Replace with your config
 const firebaseConfig = {
@@ -129,6 +130,7 @@ export default function App() {
               bannerCollection,
               carouselCollection,
               preguntasCollection,
+              paginaConfigCollection,
             ]}
             dataSource={dataSource}
             storageSource={storageSource}
