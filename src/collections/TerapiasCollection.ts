@@ -66,7 +66,6 @@ export const terapiasCollection = buildCollection<TerapiasType>({
       name: "Descipción Larga",
       dataType: "string",
       markdown: true,
-      multiline: true,
     },
     imageBanner: {
       name: "Imagen Principal",
