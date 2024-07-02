@@ -18,7 +18,10 @@ type BlogEntryProducts = {
 export type BlogEntryType = {
   name: string;
   header_image: string;
+  card_image: string;
   created_on: Date;
+  views: number;
+  tags: [];
   status: string;
   content: (BlogEntryImages | BlogEntryText | BlogEntryProducts)[];
 };

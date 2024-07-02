@@ -16,7 +16,7 @@ export const blogCollection = buildCollection<BlogEntryType>({
   ],
   properties: {
     name: buildProperty({
-      name: "Nombre de entrada",
+      name: "Nombre de articulo",
       validation: { required: true },
       dataType: "string",
     }),
@@ -26,13 +26,35 @@ export const blogCollection = buildCollection<BlogEntryType>({
       validation: { required: true },
       storage: {
         mediaType: "image",
-        storagePath: "images",
+        storagePath: "blogImages",
         acceptedFiles: ["image/*"],
         metadata: {
           cacheControl: "max-age=1000000",
         },
       },
     }),
+    card_image: buildProperty({
+      name: "Imagen de tarjeta",
+      dataType: "string",
+      validation: { required: true },
+      storage: {
+        mediaType: "image",
+        storagePath: "blogImages",
+        acceptedFiles: ["image/*"],
+        metadata: {
+          cacheControl: "max-age=1000000",
+        },
+      },
+    }),
+    views: { dataType: "number", name: "vistas", defaultValue: 0 },
+    tags: {
+      dataType: "array",
+      name: "Tags",
+      of: {
+        dataType: "string",
+        name: "Tag",
+      },
+    },
     content: buildProperty({
       name: "Content",
       validation: { required: true },
