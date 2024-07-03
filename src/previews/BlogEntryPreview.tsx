@@ -19,6 +19,8 @@ import {
   useStorageSource,
 } from "firecms";
 import { BlogEntryType } from "../types/BlogEntryType";
+import { TerapiasType } from "../types/TerapiasType";
+import { terapiasCollection } from "../collections/TerapiasCollection";
 
 export function BlogEntryPreview({
   modifiedValues,
@@ -88,13 +90,12 @@ export function BlogEntryPreview({
                   storagePaths={entry.value}
                 />
               );
-            if (entry.type === "products")
+            if (entry.type === "terapias")
               return (
-                <></>
-                // <ProductGroupPreview
-                //   key={`preview_products_${index}`}
-                //   references={entry.value}
-                // />
+                <TerapiasGroupPreview
+                  key={`preview_products_${index}`}
+                  references={entry.value}
+                />
               );
             if (entry.type === "quote")
               return (
@@ -103,7 +104,7 @@ export function BlogEntryPreview({
             return (
               <ErrorView
                 key={`preview_images_${index}`}
-                error={"Unexpected value in blog entry"}
+                error={`Unexpected value in blog entry ${entry.type}`}
               />
             );
           })}
@@ -173,106 +174,104 @@ function Text({ markdownText }: { markdownText: string }) {
   );
 }
 
-// function ProductGroupPreview({
-//   references,
-// }: {
-//   references: EntityReference[];
-// }) {
-//   const [products, setProducts] = useState<Entity<Product>[] | undefined>();
-//   const dataSource = useDataSource();
+function TerapiasGroupPreview({
+  references,
+}: {
+  references: EntityReference[];
+}) {
+  const [terapias, setTerapias] = useState<
+    Entity<TerapiasType>[] | undefined
+  >();
+  const dataSource = useDataSource();
 
-//   /**
-//    * Fetch the products determined by the references, using the datasource
-//    * and the products collection
-//    */
-//   useEffect(() => {
-//     if (references) {
-//       Promise.all(
-//         references.map((ref) =>
-//           dataSource.fetchEntity({
-//             path: ref.path,
-//             entityId: ref.id,
-//             collection: productsCollection,
-//           })
-//         )
-//       )
-//         .then((results) => results.filter((r) => !!r) as Entity<Product>[])
-//         .then((results) => setProducts(results));
-//     }
-//   }, [references, dataSource]);
+  useEffect(() => {
+    if (references) {
+      Promise.all(
+        references.map((ref) =>
+          dataSource.fetchEntity({
+            path: ref.path,
+            entityId: ref.id,
+            collection: terapiasCollection,
+          })
+        )
+      )
+        .then((results) => results.filter((r) => !!r) as Entity<TerapiasType>[])
+        .then((results) => setTerapias(results));
+    }
+  }, [references, dataSource]);
 
-//   if (!references) return <></>;
+  if (!references) return <></>;
 
-//   if (!products) return <CircularProgress />;
+  if (!terapias) return <CircularProgress />;
 
-//   return (
-//     <Container
-//       maxWidth={"lg"}
-//       sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
-//     >
-//       {products.map((p, index) => (
-//         // <ProductPreview
-//         //   key={`products_${index}`}
-//         //   productValues={p.values as EntityValues<Product>}
-//         // />
-//       ))}
-//     </Container>
-//   );
-// }
+  return (
+    <Container
+      maxWidth={"lg"}
+      sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+    >
+      {terapias.map((p, index) => (
+        <TerapiaPreview
+          key={`products_${index}`}
+          terapiaValues={p.values as EntityValues<TerapiasType>}
+        />
+      ))}
+    </Container>
+  );
+}
 
-// export function ProductPreview({
-//   productValues,
-// }: {
-//   productValues: EntityValues<Product>;
-// }) {
-//   if (!productValues) return <></>;
+export function TerapiaPreview({
+  terapiaValues,
+}: {
+  terapiaValues: EntityValues<TerapiasType>;
+}) {
+  if (!terapiaValues) return <></>;
 
-//   return (
-//     <Paper
-//       sx={{
-//         width: "300px",
-//         // height: "300px",
-//         margin: "16px",
-//         boxShadow: "rgb(0 0 0 / 8%) 0px 8px 12px -4px",
-//       }}
-//       variant={"outlined"}
-//     >
-//       <CardActionArea>
-//         <CardContent
-//           sx={{
-//             height: "100%",
-//             display: "flex",
-//             flexDirection: "column",
-//           }}
-//         >
-//           <Box
-//             flexGrow={1}
-//             flexShrink={1}
-//             flexBasis={296}
-//             p={2}
-//             maxHeight={296}
-//           >
-//             <StorageImage storagePath={productValues.main_image} />
-//           </Box>
-//           <Typography
-//             gutterBottom
-//             variant="h6"
-//             noWrap
-//             style={{
-//               marginTop: "16px",
-//             }}
-//           >
-//             {productValues.name}
-//           </Typography>
+  return (
+    <Paper
+      sx={{
+        width: "300px",
+        // height: "300px",
+        margin: "16px",
+        boxShadow: "rgb(0 0 0 / 8%) 0px 8px 12px -4px",
+      }}
+      variant={"outlined"}
+    >
+      <CardActionArea>
+        <CardContent
+          sx={{
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Box
+            flexGrow={1}
+            flexShrink={1}
+            flexBasis={296}
+            p={2}
+            maxHeight={296}
+          >
+            <StorageImage storagePath={terapiaValues.imageBanner} />
+          </Box>
+          <Typography
+            gutterBottom
+            variant="h6"
+            noWrap
+            style={{
+              marginTop: "16px",
+            }}
+          >
+            {terapiaValues.name}
+          </Typography>
 
-//           <Typography variant="body2" color="textSecondary" component="div">
-//             {productValues.price} {productValues.currency}
-//           </Typography>
-//         </CardContent>
-//       </CardActionArea>
-//     </Paper>
-//   );
-// }
+          <Typography variant="body2" color="textSecondary" component="div">
+            {terapiaValues.type} {terapiaValues.duration}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Paper>
+  );
+}
 
 function Quote({ quoteText }: { quoteText: string }) {
   if (!quoteText) return <></>;

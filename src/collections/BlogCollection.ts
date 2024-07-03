@@ -20,6 +20,13 @@ export const blogCollection = buildCollection<BlogEntryType>({
       validation: { required: true },
       dataType: "string",
     }),
+
+    autor: {
+      dataType: "string",
+      validation: { required: true },
+      name: "Autor del articulo",
+      defaultValue: "Psic. Daniela Diaz",
+    },
     header_image: buildProperty({
       name: "Imagen principal",
       dataType: "string",
@@ -33,6 +40,11 @@ export const blogCollection = buildCollection<BlogEntryType>({
         },
       },
     }),
+    resumen: {
+      dataType: "string",
+      name: "Resumen",
+      markdown: true,
+    },
     card_image: buildProperty({
       name: "Imagen de tarjeta",
       dataType: "string",
@@ -84,13 +96,17 @@ export const blogCollection = buildCollection<BlogEntryType>({
             name: "Texto del articulo",
             markdown: true,
           }),
-          products: buildProperty({
+          terapias: buildProperty({
             name: "Terapias",
             dataType: "array",
             of: {
               dataType: "reference",
               path: "terapias", // you need to define a valid collection in this path
             },
+          }),
+          quote: buildProperty({
+            name: "Quote",
+            dataType: "string",
           }),
         },
       },
