@@ -2,7 +2,8 @@ import { TerapiasType } from "./TerapiasType";
 
 type BlogEntryImages = {
   type: "images";
-  value: string[];
+  value: string;
+  caption: string;
 };
 
 type BlogEntryText = {
@@ -17,6 +18,7 @@ type BlogEntryTerapia = {
 type BlogEntryQuote = {
   type: "quote";
   value: string;
+  autor: string;
 };
 
 export type BlogEntryType = {

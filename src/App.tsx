@@ -35,6 +35,7 @@ import { paginaConfigCollection } from "./collections/PageConfigCollection";
 import { usersCollection } from "./collections/UsersCollection";
 import { blogCollection } from "./collections/BlogCollection";
 import { blogsCollection } from "./collections/BlogsMainCollection";
+import { commentsCollection } from "./collections/CommentsCollection";
 
 // TODO: Replace with your config
 const firebaseConfig = {
@@ -137,6 +138,7 @@ export default function App() {
               usersCollection,
               blogsCollection,
               blogCollection,
+              commentsCollection,
             ]}
             dataSource={dataSource}
             storageSource={storageSource}

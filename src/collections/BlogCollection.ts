@@ -76,20 +76,24 @@ export const blogCollection = buildCollection<BlogEntryType>({
         typeField: "type",
         valueField: "value",
         properties: {
-          images: buildProperty({
+          image: buildProperty({
             name: "Imagenes del articulo",
-            dataType: "array",
-            of: buildProperty({
-              dataType: "string",
-              storage: {
-                mediaType: "image",
-                storagePath: "images",
-                acceptedFiles: ["image/*"],
-                metadata: {
-                  cacheControl: "max-age=1000000",
+
+            dataType: "map",
+            properties: {
+              image: {
+                dataType: "string",
+                name: "Imagen",
+                storage: {
+                  storagePath: "images",
+                  acceptedFiles: ["image/*"],
+                  metadata: {
+                    cacheControl: "max-age=1000000",
+                  },
                 },
               },
-            }),
+              caption: { dataType: "string", name: "Descripción" },
+            },
           }),
           text: buildProperty({
             dataType: "string",
@@ -106,7 +110,11 @@ export const blogCollection = buildCollection<BlogEntryType>({
           }),
           quote: buildProperty({
             name: "Quote",
-            dataType: "string",
+            dataType: "map",
+            properties: {
+              text: { dataType: "string", name: "Texto" },
+              autor: { dataType: "string", name: "Autor" },
+            },
           }),
         },
       },
