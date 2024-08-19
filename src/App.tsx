@@ -36,6 +36,7 @@ import { usersCollection } from "./collections/UsersCollection";
 import { blogCollection } from "./collections/BlogCollection";
 import { blogsCollection } from "./collections/BlogsMainCollection";
 import { commentsCollection } from "./collections/CommentsCollection";
+import { tasksCollection } from "./collections/TaskCollection";
 
 // TODO: Replace with your config
 const firebaseConfig = {
@@ -139,6 +140,7 @@ export default function App() {
               blogsCollection,
               blogCollection,
               commentsCollection,
+              tasksCollection,
             ]}
             dataSource={dataSource}
             storageSource={storageSource}
