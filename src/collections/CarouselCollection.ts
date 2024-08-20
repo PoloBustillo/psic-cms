@@ -3,15 +3,16 @@ import { CarouselType } from "../types/CarouselType";
 
 export const carouselCollection = buildCollection<CarouselType>({
   group: "Configuraciones",
-  name: "Carousel",
-  defaultSize: "m",
+  name: "Carousel de información",
+  defaultSize: "l",
   singularName: "Carousel",
   path: "carousel",
-  icon: "PermMedia",
+  icon: "ViewCarousel",
   inlineEditing: true,
   properties: {
     image: {
       name: "Imagen",
+      columnWidth: 250,
       validation: { required: true },
       dataType: "string",
       storage: {
@@ -25,6 +26,7 @@ export const carouselCollection = buildCollection<CarouselType>({
     content: {
       dataType: "string",
       name: "Contenido",
+      columnWidth: 600,
       markdown: true,
       validation: { required: true },
     },
@@ -32,6 +34,10 @@ export const carouselCollection = buildCollection<CarouselType>({
       dataType: "string",
       name: "Titulo",
       validation: { required: true },
+    },
+    url: {
+      dataType: "string",
+      name: "Link",
     },
     enable: {
       dataType: "boolean",

@@ -8,7 +8,7 @@ export const sitiosCollection = buildCollection<SitiosType>({
   singularName: "Sitios",
   customId: true,
   path: "data",
-  icon: "Newspaper",
+  icon: "Language",
   inlineEditing: true,
   properties: {
     name: {

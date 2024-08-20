@@ -11,7 +11,7 @@ export const informacionPersonal = buildCollection<InformacionPersonalType>({
   defaultSize: "m",
   singularName: "Información personal",
   path: "info",
-  icon: "User",
+  icon: "PermContactCalendar",
   inlineEditing: true,
   properties: {
     image: {
@@ -27,6 +27,7 @@ export const informacionPersonal = buildCollection<InformacionPersonalType>({
     },
     shortDescription: {
       dataType: "string",
+      columnWidth: 400,
       name: "Descripción personal",
       markdown: true,
       validation: { required: true, requiredMessage: "Es requerida" },

@@ -3,7 +3,7 @@ import { PageConfigType } from "../types/PageConfigType";
 
 export const paginaConfigCollection = buildCollection<PageConfigType>({
   group: "Configuraciones",
-  name: "Página de Inicio",
+  name: "Estructura página de inicio",
   defaultSize: "m",
   singularName: "Pagina",
   customId: [
@@ -14,19 +14,41 @@ export const paginaConfigCollection = buildCollection<PageConfigType>({
     { id: "carrousel", label: "Carrousel de Información" },
   ],
   path: "page-configs",
-  icon: "Web",
+  icon: "Dashboard",
   inlineEditing: true,
   properties: {
     priority: {
       dataType: "number",
+      columnWidth: 200,
       name: "Prioridad",
       validation: { required: true, requiredMessage: "Es requerida" },
     },
     enabled: {
+      columnWidth: 200,
       dataType: "boolean",
       name: "Habilitado",
       defaultValue: true,
       validation: { required: true, requiredMessage: "Es requerida" },
+    },
+    colors: {
+      dataType: "array",
+      name: "Colores",
+      of: {
+        dataType: "map",
+        name: "Color",
+        properties: {
+          nombre: {
+            name: "Nombre",
+            validation: { required: true },
+            dataType: "string",
+          },
+          valor: {
+            name: "Valor",
+            dataType: "string",
+            validation: { required: true },
+          },
+        },
+      },
     },
   },
   permissions: ({ authController }) => {

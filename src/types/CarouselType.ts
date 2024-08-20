@@ -3,4 +3,5 @@ export type CarouselType = {
   title: string;
   content: string;
   enable: boolean;
+  url: string;
 };

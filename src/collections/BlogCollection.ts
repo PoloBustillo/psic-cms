@@ -5,7 +5,7 @@ import { BlogEntryType } from "../types/BlogEntryType";
 export const blogCollection = buildCollection<BlogEntryType>({
   name: "Entrada de Blog",
   group: "Blog",
-  icon: "Article",
+  icon: "Feed",
   path: "blog",
   views: [
     {

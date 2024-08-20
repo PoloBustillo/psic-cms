@@ -3,11 +3,11 @@ import { BannerType } from "../types/BannerType";
 
 export const bannerCollection = buildCollection<BannerType>({
   group: "Configuraciones",
-  name: "Banner",
+  name: "Banner de subscripción",
   defaultSize: "m",
   singularName: "Banner",
   path: "banner",
-  icon: "PermMedia",
+  icon: "Subscriptions",
   inlineEditing: true,
   properties: {
     image: {

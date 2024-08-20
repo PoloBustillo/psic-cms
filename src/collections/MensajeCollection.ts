@@ -3,7 +3,7 @@ import { buildCollection } from "firecms";
 
 export const messageCollection = buildCollection<MensajeType>({
   group: "Configuraciones",
-  name: "Mensajes",
+  name: "Titulos y mensajes",
   defaultSize: "m",
   singularName: "Mensaje",
   customId: [
@@ -12,11 +12,11 @@ export const messageCollection = buildCollection<MensajeType>({
     { id: "frase", label: "Frase Inicial" },
   ],
   path: "mensaje",
-  icon: "InsertComment",
+  icon: "Rtt",
   inlineEditing: true,
   properties: {
     message: {
-      columnWidth: 400,
+      columnWidth: 600,
       name: "Mensaje",
       validation: { required: true },
       dataType: "string",
@@ -24,6 +24,7 @@ export const messageCollection = buildCollection<MensajeType>({
     },
     enable: {
       name: "Habilitado",
+      columnWidth: 200,
       defaultValue: true,
       validation: { required: true },
       dataType: "boolean",

@@ -128,19 +128,19 @@ export default function App() {
           <FireCMS
             authController={authController}
             collections={[
+              paginaConfigCollection,
               messageCollection,
               sitiosCollection,
               terapiasCollection,
               informacionPersonal,
-              bannerCollection,
               carouselCollection,
               preguntasCollection,
-              paginaConfigCollection,
               usersCollection,
               blogsCollection,
               blogCollection,
               commentsCollection,
               tasksCollection,
+              bannerCollection,
             ]}
             dataSource={dataSource}
             storageSource={storageSource}
