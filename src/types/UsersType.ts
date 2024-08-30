@@ -2,6 +2,7 @@ export type UsersType = {
   name: string;
   apellidoPaterno: string;
   apellidoMaterno: string;
+  subscripcion: boolean;
   email: string;
   image: string;
   celular: string;
