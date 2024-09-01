@@ -1,5 +1,7 @@
-import { buildCollection } from "firecms";
+import { buildCollection, buildProperty } from "firecms";
 import { UsersType } from "../types/UsersType";
+import RangeDatePreview from "../previews/RangeDatePreview";
+import RangeDateField from "../customfield/RandeDateField";
 
 export const usersCollection = buildCollection<UsersType>({
   group: "Configuraciones",
@@ -10,6 +12,49 @@ export const usersCollection = buildCollection<UsersType>({
   icon: "PeopleAlt",
   inlineEditing: true,
   properties: {
+    tareas: {
+      dataType: "array",
+      name: "Tareas",
+      of: {
+        dataType: "map",
+        name: "Tarea",
+        properties: {
+          tarea: {
+            dataType: "reference",
+            name: "Enlace a tarea",
+            path: "tareas",
+          },
+          rangeDate: buildProperty({
+            name: "Rango de fechas",
+            dataType: "array",
+            of: {
+              name: "Fechas",
+              dataType: "date",
+              mode: "date",
+              defaultValue: new Date(),
+            },
+            Field: RangeDateField,
+            Preview: RangeDatePreview,
+            validation: { required: true },
+            description: "Rango de fechas para formulario",
+            columnWidth: 300,
+          }),
+          status: {
+            dataType: "string",
+            name: "Estado",
+            validation: {
+              required: true,
+            },
+            enumValues: {
+              abierta: "Abierta",
+              cerrada: "Cerrada",
+              completada: "Completada",
+            },
+            defaultValue: "abierta",
+          },
+        },
+      },
+    },
     terapia: {
       dataType: "array",
       name: "Terapias",
@@ -37,6 +82,10 @@ export const usersCollection = buildCollection<UsersType>({
       dataType: "string",
       name: "Apellido Paterno",
     },
+    subscripcion: {
+      dataType: "boolean",
+      name: "Subscripción a blog",
+    },
     apellidoMaterno: {
       dataType: "string",
       name: "Apellido Materno",
@@ -59,7 +108,7 @@ export const usersCollection = buildCollection<UsersType>({
     sexo: { dataType: "string", name: "Sexo" },
     notas: { dataType: "string", name: "Notas", markdown: true },
   },
-  permissions: ({ authController }) => {
+  permissions: ({}) => {
     return {
       edit: true,
       create: true,

@@ -1,12 +1,45 @@
-import { buildCollection, buildProperty } from "firecms";
+import {
+  buildCollection,
+  buildEntityCallbacks,
+  buildProperty,
+  EntityOnSaveProps,
+} from "firecms";
 import { BlogEntryPreview } from "../previews/BlogEntryPreview";
 import { BlogEntryType } from "../types/BlogEntryType";
+import axios from "axios";
 
+const productCallbacks = buildEntityCallbacks({
+  onSaveSuccess: async (props: EntityOnSaveProps<BlogEntryType>) => {
+    // return the updated values
+    // console.log("DATA", context.dataSource);
+    // let data = await context.dataSource.fetchCollection({
+    //   path: "users",
+    //   collection: collection,
+    // });
+
+    // Check if the status is "published"
+    if (props.values.status === "published") {
+      // Prepare the request configuration
+      const config = {
+        method: "get",
+        maxBodyLength: Infinity,
+        url: `https://danielawebsitev2.vercel.app/api/email/newblog?name=${props.values.name}&description=${props.values.resumen}`,
+      };
+
+      // Send the request
+      const response = await axios.request(config);
+
+      // Log the response
+      console.log("RESPONSE", response);
+    }
+  },
+});
 export const blogCollection = buildCollection<BlogEntryType>({
   name: "Entrada de Blog",
   group: "Blog",
   icon: "Feed",
   path: "blog",
+  callbacks: productCallbacks,
   views: [
     {
       path: "preview",

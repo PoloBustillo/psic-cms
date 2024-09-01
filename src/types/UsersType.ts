@@ -12,5 +12,6 @@ export type UsersType = {
   religion: string;
   sexo: string;
   terapia: Array<any>;
+  tareas: Array<any>;
   notas: string;
 };

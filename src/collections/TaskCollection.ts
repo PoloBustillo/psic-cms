@@ -13,100 +13,70 @@ export const tasksCollection = buildCollection<TasksEntryType>({
       validation: { required: true },
       dataType: "string",
     }),
-    users: {
-      dataType: "array",
-      name: "Usuarios",
-      of: {
-        dataType: "reference",
-        path: "users",
-      },
-    },
     explicacion: {
       dataType: "string",
-      name: "Explicación",
+      name: "Instrucciones de tarea",
       markdown: true,
     },
-    fechaInicio: buildProperty({
-      name: "Fecha de inicio",
-      dataType: "date",
-      validation: { required: true },
-    }),
-    fechaEntrega: buildProperty({
-      name: "Fecha de entrega",
-      dataType: "date",
-      readOnly: true,
-    }),
-    status: buildProperty(({ values }) => ({
-      name: "Status",
-      dataType: "string",
-      columnWidth: 140,
-      enumValues: {
-        completado: "Completado",
-        enProgreso: "En progreso",
-        inicio: "Inicio",
-      },
-      defaultValue: "inicio",
-    })),
     type: buildProperty({
-      name: "Tipo de tarea",
+      name: "Secciones",
       dataType: "array",
-      columnWidth: 400,
-      oneOf: {
-        typeField: "type",
-        valueField: "value",
+      of: {
+        dataType: "map",
         properties: {
-          table: buildProperty({
-            name: "Tabla",
-            dataType: "map",
-            properties: {
-              columns: {
-                dataType: "array",
-                name: "Columnas",
-                of: {
+          type: {
+            dataType: "array",
+            oneOf: {
+              typeField: "type",
+              valueField: "value",
+              properties: {
+                name: {
+                  name: "Archivo",
                   dataType: "string",
                 },
-              },
-              rows: {
-                dataType: "array",
-                name: "Filas",
-                of: {
+                text: {
                   dataType: "string",
+                  name: "Texto",
                 },
-              },
-              canExpand: {
-                dataType: "boolean",
-                name: "Expandible",
+                link: {
+                  dataType: "string",
+                  name: "Tipo de Link",
+                },
+                formulario: {
+                  dataType: "reference",
+                  name: "Formulario",
+                  path: "tipos-encuestas",
+                },
               },
             },
-          }),
-          text: buildProperty({
-            name: "Texto",
+            // of: {
+            //   dataType: "string",
+            //   name: "Tipo de sección",
+            //   validation: { required: true },
+            //   enumValues: {
+            //     texto: "Texto",
+            //     archivo: "Archivo",
+            //     link: "Link",
+            //     formulario: "Formulario",
+            //     tabla: {
+            //       id: "table",
+            //       label: "Tabla",
+            //       disabled: true,
+            //     },
+            //   },
+            // },
+          },
+          description: {
             dataType: "string",
+            name: "Descipción",
+            validation: { required: true },
             markdown: true,
-          }),
-          file: buildProperty({
-            name: "Archivo",
-            dataType: "map",
-            properties: {
-              content: {
-                dataType: "array",
-                name: "Documentos",
-                of: {
-                  dataType: "string",
-                  storage: {
-                    storagePath: "tareas",
-                    metadata: {
-                      cacheControl: "max-age=1000000",
-                    },
-                  },
-                },
-              },
-              document: {
-                dataType: "string",
-                name: "Contenido",
-              },
-            },
-          }),
+          },
+          name: {
+            dataType: "string",
+            name: "Nombre de sección",
+            validation: { required: true },
+          },
         },
       },
     }),
