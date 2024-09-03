@@ -2,7 +2,6 @@ import { EntityReference } from "firecms";
 
 export type TareasPreguntas = {
   pregunta: string;
-  tipoEncuesta: EntityReference[];
   type:
     | {
         value: "open";
@@ -50,5 +49,4 @@ export type TareasPreguntas = {
   maxCharacters: Number;
   prioridad: Number;
   description: string;
-  sqlId: any;
 };

@@ -37,49 +37,6 @@ export const usersCollection = buildCollection<UsersType>({
       columnWidth: 300,
     },
     celular: { dataType: "string", name: "Celular" },
-    tareas: {
-      dataType: "array",
-      name: "Tareas",
-      of: {
-        dataType: "map",
-        name: "Tarea",
-        properties: {
-          tarea: {
-            dataType: "reference",
-            name: "Enlace a tarea",
-            path: "tareas",
-          },
-          rangeDate: buildProperty({
-            name: "Rango de fechas",
-            dataType: "array",
-            of: {
-              name: "Fechas",
-              dataType: "date",
-              mode: "date",
-              defaultValue: new Date(),
-            },
-            Field: RangeDateField,
-            Preview: RangeDatePreview,
-            validation: { required: true },
-            description: "Rango de fechas para formulario",
-            columnWidth: 300,
-          }),
-          status: {
-            dataType: "string",
-            name: "Estado",
-            validation: {
-              required: true,
-            },
-            enumValues: {
-              abierta: "Abierta",
-              cerrada: "Cerrada",
-              completada: "Completada",
-            },
-            defaultValue: "abierta",
-          },
-        },
-      },
-    },
     terapia: {
       dataType: "array",
       name: "Terapias",

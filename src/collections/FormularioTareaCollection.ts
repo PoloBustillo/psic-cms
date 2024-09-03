@@ -22,6 +22,15 @@ export const formulariosTareasCollection = buildCollection<
 
       name: "Descripción",
     }),
+    preguntas: buildProperty({
+      dataType: "array",
+      name: "Preguntas",
+      of: {
+        dataType: "reference",
+        path: "tareas-preguntas",
+        name: "Pregunta",
+      },
+    }),
     // rangeDate: buildProperty({
     //   name: "Rango de fechas",
     //   dataType: "array",

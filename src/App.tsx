@@ -40,6 +40,7 @@ import { tasksCollection } from "./collections/TaskCollection";
 import { tareasPreguntasCollection } from "./collections/TareaPreguntas";
 import { formulariosTareasCollection } from "./collections/FormularioTareaCollection";
 import { respuestasCollection } from "./collections/RespuestasCollection";
+import { tareasUsuarioRespuestasCollection } from "./collections/TareaUsuarioRespuestas";
 
 // TODO: Replace with your config
 const firebaseConfig = {
@@ -147,6 +148,7 @@ export default function App() {
               tareasPreguntasCollection,
               formulariosTareasCollection,
               respuestasCollection,
+              tareasUsuarioRespuestasCollection,
             ]}
             dataSource={dataSource}
             storageSource={storageSource}

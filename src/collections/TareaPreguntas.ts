@@ -149,19 +149,6 @@ export const tareasPreguntasCollection = buildCollection<
         properties: properties,
       };
     }),
-    tipoEncuesta: ({ values }) => {
-      return {
-        dataType: "array",
-        name: "Tipo de encuestas",
-        description: "Tipo de pregunta a la que pertenece esta pregunta",
-
-        of: {
-          dataType: "reference",
-          path: "tipos-encuestas",
-        },
-        columnWidth: 300,
-      };
-    },
     description: {
       dataType: "string",
       name: "Descripción",
@@ -178,16 +165,16 @@ export const tareasPreguntasCollection = buildCollection<
         validation: { positive: true, integer: true },
       };
     }),
-    required: {
-      dataType: "boolean",
-      name: "Requerida",
-      description: "La pregunta es obligatoria para ser contestada",
-    },
-    enable: {
-      dataType: "boolean",
-      name: "Habilitada",
-      description: "La pregunta es mostrada en encuesta",
-    },
+    // required: {
+    //   dataType: "boolean",
+    //   name: "Requerida",
+    //   description: "La pregunta es obligatoria para ser contestada",
+    // },
+    // enable: {
+    //   dataType: "boolean",
+    //   name: "Habilitada",
+    //   description: "La pregunta es mostrada en encuesta",
+    // },
     prioridad: buildProperty({
       dataType: "number",
       name: "Prioridad",
