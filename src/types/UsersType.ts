@@ -14,4 +14,5 @@ export type UsersType = {
   terapia: Array<any>;
   tareas: Array<any>;
   notas: string;
+  reviews: any;
 };

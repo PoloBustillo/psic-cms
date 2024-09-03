@@ -12,6 +12,31 @@ export const usersCollection = buildCollection<UsersType>({
   icon: "PeopleAlt",
   inlineEditing: true,
   properties: {
+    image: {
+      dataType: "string",
+      storage: {
+        storagePath: "avatars",
+        acceptedFiles: ["image/*"],
+        metadata: {
+          cacheControl: "max-age=1000000",
+        },
+      },
+    },
+    name: {
+      dataType: "string",
+      name: "Nombre",
+    },
+    apellidoPaterno: {
+      dataType: "string",
+      name: "Apellido Paterno",
+    },
+    email: {
+      dataType: "string",
+      name: "Email",
+      readOnly: true,
+      columnWidth: 300,
+    },
+    celular: { dataType: "string", name: "Celular" },
     tareas: {
       dataType: "array",
       name: "Tareas",
@@ -63,40 +88,50 @@ export const usersCollection = buildCollection<UsersType>({
         path: "terapias",
       },
     },
-    image: {
-      dataType: "string",
-      storage: {
-        storagePath: "avatars",
-        acceptedFiles: ["image/*"],
-        metadata: {
-          cacheControl: "max-age=1000000",
-        },
-      },
-    },
 
-    name: {
-      dataType: "string",
-      name: "Nombre",
-    },
-    apellidoPaterno: {
-      dataType: "string",
-      name: "Apellido Paterno",
-    },
     subscripcion: {
       dataType: "boolean",
       name: "Subscripción a blog",
+    },
+    reviews: {
+      dataType: "map",
+      name: "Reviews",
+      readOnly: true,
+      properties: {
+        comfort: {
+          dataType: "number",
+          name: "Comfort",
+        },
+        comodidades: {
+          dataType: "number",
+          name: "Comodidades",
+        },
+        espacio: {
+          dataType: "number",
+          name: "Espacio",
+        },
+        limpieza: {
+          dataType: "number",
+          name: "Limpieza",
+        },
+        locacion: {
+          dataType: "number",
+          name: "Locacion",
+        },
+        servicio: {
+          dataType: "number",
+          name: "Servicio",
+        },
+        wifi: {
+          dataType: "number",
+          name: "Wifi",
+        },
+      },
     },
     apellidoMaterno: {
       dataType: "string",
       name: "Apellido Materno",
     },
-    email: {
-      dataType: "string",
-      name: "Email",
-      readOnly: true,
-      columnWidth: 300,
-    },
-    celular: { dataType: "string", name: "Celular" },
 
     fechaNacimiento: {
       dataType: "string",

@@ -10,23 +10,17 @@ interface datesFieldProps {
 export default function RangeDateField(
   fieldProps: FieldProps<Date[], datesFieldProps>
 ) {
-  const [startDate, setStartDate] = useState(
-    fieldProps.context.values.startDate
-      ? fieldProps.context.values.startDate
-      : null
+  const [startDate, setStartDate] = useState<Date>(
+    fieldProps.value ? fieldProps.value[0] : new Date()
   );
-  const [endDate, setEndDate] = useState(
-    fieldProps.context.values.endDate ? fieldProps.context.values.endDate : null
+  const [endDate, setEndDate] = useState<Date>(
+    fieldProps.value ? fieldProps.value[1] : new Date()
   );
   const [error, setError] = useState("");
 
   useEffect(() => {
-    setError("");
-    if (!startDate || !endDate) {
-      setError("Requerido");
-    } else {
-      fieldProps.setValue([startDate, endDate]);
-    }
+    fieldProps.setValue([startDate, endDate]);
+    console.log(fieldProps);
   }, [startDate, endDate]);
 
   return (

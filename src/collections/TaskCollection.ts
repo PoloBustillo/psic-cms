@@ -30,7 +30,7 @@ export const tasksCollection = buildCollection<TasksEntryType>({
               typeField: "type",
               valueField: "value",
               properties: {
-                name: {
+                archivo: {
                   name: "Archivo",
                   dataType: "string",
                 },
