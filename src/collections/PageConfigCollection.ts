@@ -12,6 +12,7 @@ export const paginaConfigCollection = buildCollection<PageConfigType>({
     { id: "fqa", label: "Preguntas Frecuentes" },
     { id: "contact", label: "Contanto" },
     { id: "carrousel", label: "Carrousel de Información" },
+    { id: "blogs", label: "Blogs mas vistos" },
   ],
   path: "page-configs",
   icon: "Dashboard",

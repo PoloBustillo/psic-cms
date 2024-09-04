@@ -11,19 +11,9 @@ export const respuestasCollection = buildCollection<RespuestasType>({
   icon: "Quiz",
   inlineEditing: true,
   properties: {
-    user: {
-      dataType: "reference",
-      name: "Usuario",
-      path: "users",
-    },
-    tarea: {
-      dataType: "reference",
-      name: "Tarea",
-      path: "tareas",
-    },
-    data: {
+    archivos: {
       dataType: "array",
-      name: "Respuestas",
+      name: "Respuestas Archivos",
       of: {
         dataType: "map",
         name: "Data",
@@ -31,10 +21,6 @@ export const respuestasCollection = buildCollection<RespuestasType>({
           nombre: {
             dataType: "string",
             name: "Nombre",
-          },
-          respuesta: {
-            dataType: "string",
-            name: "Respuesta",
           },
           archivos: {
             dataType: "array",
@@ -53,6 +39,29 @@ export const respuestasCollection = buildCollection<RespuestasType>({
           },
         },
       },
+    },
+    data: {
+      dataType: "array",
+      name: "Respuestas",
+      of: {
+        dataType: "map",
+        name: "Data",
+        properties: {
+          nombre: {
+            dataType: "string",
+            name: "Nombre",
+          },
+          respuesta: {
+            dataType: "string",
+            name: "Respuesta",
+          },
+        },
+      },
+    },
+    formularios: {
+      dataType: "reference",
+      name: "Formulario",
+      path: "formulario-respuestas",
     },
   },
   permissions: ({ authController }) => {

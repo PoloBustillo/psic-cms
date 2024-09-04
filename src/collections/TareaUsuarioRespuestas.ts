@@ -26,7 +26,6 @@ export const tareasUsuarioRespuestasCollection = buildCollection<
       dataType: "reference",
       name: "Respuesta",
       path: "respuestas",
-      readOnly: true,
     }),
     rangeDate: buildProperty({
       name: "Rango de fechas",
@@ -52,7 +51,7 @@ export const tareasUsuarioRespuestasCollection = buildCollection<
       enumValues: {
         abierta: "Abierta",
         revisada: "Revisada",
-        completada: "Completada",
+        entregada: "Entregada",
       },
       defaultValue: "abierta",
     },
